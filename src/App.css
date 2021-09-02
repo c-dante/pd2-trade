@@ -6,6 +6,12 @@
   color: #c9c9c9;
 }
 
+/*
+----------------
+Drop area
+----------------
+*/
+
 .drop-zone {
   display: flex;
   flex: 1 1;
@@ -21,14 +27,17 @@
   margin-top: 0;
 }
 
+/*
+----------------
+Results Window
+----------------
+*/
+
+/* Results window layout */
 .results-window {
   overflow: hidden;
   display: flex;
   flex: 1 1 80%;
-}
-
-.results-window-hidden {
-  display: none;
 }
 
 .stash-results {
@@ -36,19 +45,12 @@
   flex-basis: 75%;
 }
 
-.d2-item {
-  margin-bottom: 0.5em;
+/* Filter results */
+.filter-menu {
+  padding: 0.5em;
 }
 
-.d2-item-name {
-  font-weight: 500;
-}
-
-.d2-item-stat {
-  display: block;
-  margin-left: 1em;
-}
-
+/* Stash results */
 .stash {
   margin: 0.5em;
   padding: 0.5em;
@@ -64,4 +66,47 @@
   font-size: 1.5em;
   font-weight: bold;
   color: #dedede;
+}
+
+/*
+----------------
+Items
+----------------
+*/
+.d2-item {
+  margin-bottom: 0.5em;
+}
+
+.d2-item-name {
+  font-weight: 500;
+}
+
+.d2-item-type {
+  color: #999999;
+}
+
+.d2-item-value {
+  color: #9090FF;
+}
+
+.d2-item-range {
+  color: #90FF90;
+}
+
+.d2-item-stat {
+  display: block;
+  margin-left: 1em;
+}
+
+/*
+----------------
+Utility
+----------------
+*/
+.hidden {
+  display: none;
+}
+
+.clickable {
+  cursor: pointer;
 }

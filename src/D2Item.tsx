@@ -1,4 +1,6 @@
+import classNames from 'classnames';
 import { FC } from 'react';
+import type { Settings } from './util';
 
 export type Quality = 'Magic' | 'Unique' | 'Set' | 'Normal';
 
@@ -24,7 +26,7 @@ export interface Stat {
 };
 
 export interface Item {
-	name: string;
+	name?: string;
 	iLevel: number;
 	quality: Quality;
 	type: string;
@@ -44,7 +46,7 @@ interface ItemStatProps {
 };
 const ItemStat: FC<ItemStatProps> = ({ stat }) => {
 	const rangeSuffix = stat.range
-		? (<span>[{stat.range.min} - {stat.range.max}]</span>)
+		? (<span className="d2-item-range">[{stat.range.min} - {stat.range.max}]</span>)
 		: null;
 
 	if (stat.level !== undefined) {
@@ -54,10 +56,12 @@ const ItemStat: FC<ItemStatProps> = ({ stat }) => {
 	}
 	const value = (() => {
 		if (stat.min !== undefined) {
-			return `${stat.min} - ${stat.max}`;
+			return <span className="d2-item-value">{stat.min} - {stat.max}</span>;
 		}
 
-		return stat.value || null;
+		return stat.value
+			? <span className="d2-item-value">{stat.value}</span>
+			: null;
 	})();
 	return (
 		<span className="d2-item-stat">{value} {stat.name} {stat.skill ?? null}{rangeSuffix}</span>
@@ -66,15 +70,21 @@ const ItemStat: FC<ItemStatProps> = ({ stat }) => {
 
 export interface D2ItemProps {
 	item: Item;
+	settings: Settings;
 };
 
 
-export const D2Item: FC<D2ItemProps> = ({ item }) => (
+export const D2Item: FC<D2ItemProps> = ({ item, settings }) => (
 	<div className="d2-item">
-		<span className="d2-item-name">{item.name} - {item.type}</span>
-		{item.defense && <span className="d2-item-stat">Defense: {item.defense}</span>}
-		{(item.stats ?? []).map((stat, i) => (
-			<ItemStat stat={stat} key={i} />
-		))}
+		<span className="d2-item-name">{item.name ?? item.type}</span>
+		<span className={classNames('d2-item-props', {
+			'hidden': settings.hideProps,
+		})}>
+			<span className="d2-item-stat d2-item-type">{item.type}</span>
+			{item.defense && <span className="d2-item-stat">Defense: <span className="d2-item-value">{item.defense}</span></span>}
+			{(item.stats ?? []).map((stat, i) => (
+				<ItemStat stat={stat} key={i} />
+			))}
+		</span>
 	</div>
 );
