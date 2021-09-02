@@ -1,38 +1,67 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
+  flex-direction: column;
+  color: #c9c9c9;
+}
+
+.drop-zone {
+  display: flex;
+  flex: 1 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  border: 1px dashed white;
+  margin: 1em;
+  padding: 0.5em;
 }
 
-.App-link {
-  color: #61dafb;
+.drop-zone > p {
+  margin-top: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.results-window {
+  overflow: hidden;
+  display: flex;
+  flex: 1 1 80%;
+}
+
+.results-window-hidden {
+  display: none;
+}
+
+.stash-results {
+  overflow: auto;
+  flex-basis: 75%;
+}
+
+.d2-item {
+  margin-bottom: 0.5em;
+}
+
+.d2-item-name {
+  font-weight: 500;
+}
+
+.d2-item-stat {
+  display: block;
+  margin-left: 1em;
+}
+
+.stash {
+  margin: 0.5em;
+  padding: 0.5em;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.stash-error {
+  color: red;
+}
+
+.stash-owner {
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #dedede;
 }
