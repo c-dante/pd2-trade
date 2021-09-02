@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/pd2-trade/static/css/main.f6a9bc56.chunk.css",
+    "main.js": "/pd2-trade/static/js/main.a4c68ecb.chunk.js",
+    "main.js.map": "/pd2-trade/static/js/main.a4c68ecb.chunk.js.map",
+    "runtime-main.js": "/pd2-trade/static/js/runtime-main.1b8546e4.js",
+    "runtime-main.js.map": "/pd2-trade/static/js/runtime-main.1b8546e4.js.map",
+    "static/js/2.aba95ea2.chunk.js": "/pd2-trade/static/js/2.aba95ea2.chunk.js",
+    "static/js/2.aba95ea2.chunk.js.map": "/pd2-trade/static/js/2.aba95ea2.chunk.js.map",
+    "static/js/3.5a1bfd8e.chunk.js": "/pd2-trade/static/js/3.5a1bfd8e.chunk.js",
+    "static/js/3.5a1bfd8e.chunk.js.map": "/pd2-trade/static/js/3.5a1bfd8e.chunk.js.map",
+    "index.html": "/pd2-trade/index.html",
+    "static/css/main.f6a9bc56.chunk.css.map": "/pd2-trade/static/css/main.f6a9bc56.chunk.css.map",
+    "static/js/2.aba95ea2.chunk.js.LICENSE.txt": "/pd2-trade/static/js/2.aba95ea2.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1b8546e4.js",
+    "static/js/2.aba95ea2.chunk.js",
+    "static/css/main.f6a9bc56.chunk.css",
+    "static/js/main.a4c68ecb.chunk.js"
+  ]
+}
