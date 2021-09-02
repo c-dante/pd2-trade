@@ -1,5 +1,5 @@
 export const defaultSettings = () => ({
-	hideProps: true,
+	hideProps: false,
 });
 
 export type Settings = ReturnType<typeof defaultSettings>;

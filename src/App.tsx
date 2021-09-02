@@ -89,10 +89,6 @@ function App() {
     return Promise.all(promises);
   }, [acceptedFiles]);
 
-  useEffect(() => {
-    console.log(loading, error, value);
-  }, [loading, error, value]);
-
   return (
     <div className="App">
       <div {...getRootProps()} className="drop-zone">
