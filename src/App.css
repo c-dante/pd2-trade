@@ -1,3 +1,7 @@
+h1, h2, h3, h4 {
+  margin: 0.5em 0;
+}
+
 .App {
   background-color: #282c34;
   height: 100vh;
@@ -42,12 +46,14 @@ Results Window
 
 .stash-results {
   overflow: auto;
-  flex-basis: 75%;
+  flex: 1 0 auto;
 }
 
 /* Filter results */
 .filter-menu {
+  overflow: auto;
   padding: 0.5em;
+  flex-basis: 25%;
 }
 
 /* Stash results */
@@ -81,7 +87,7 @@ Items
   font-weight: 500;
 }
 
-.d2-item-type {
+.subtle {
   color: #999999;
 }
 
@@ -96,6 +102,15 @@ Items
 .d2-item-stat {
   display: block;
   margin-left: 1em;
+}
+
+.d2-item-eth {
+  font-style: italic;
+}
+
+.corrupted {
+  color: #ff9090;
+  font-weight: 500;
 }
 
 /*

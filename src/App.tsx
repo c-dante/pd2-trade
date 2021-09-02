@@ -1,18 +1,17 @@
-import { FC, useEffect, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useMemo, useState } from 'react';
 import './App.css';
 import { useDropzone } from 'react-dropzone';
 import { useAsync } from 'react-use';
-import { Item, D2Item } from './D2Item';
+import { D2Item } from './D2Item';
 import classNames from 'classnames';
-import { defaultSettings } from './util';
-import type { Settings } from './util';
+import { defaultSettings, computeStats, emptyStats } from './util';
+import type { Settings, Item, Stats } from './util';
 
 interface FileLoad<T, E> {
   file: File;
   value?: T;
   error?: E;
-}
-
+};
 
 interface StashProps {
   stash: FileLoad<Item[], any>;
@@ -38,6 +37,109 @@ const Stash: FC<StashProps> = ({ stash, settings }) => {
         )}
       </span>
     </div>
+  );
+};
+
+interface FilterMenuProps {
+  settings: Settings;
+  setSettings: Dispatch<SetStateAction<Settings>>;
+  stats: Stats;
+}
+
+const toId = (str: string) => str.toLowerCase().replace(/\W+/, ' ').replace(' ', '-');
+
+interface VarFilterProps {
+  prefix: string;
+  map: Map<string, number>;
+  toggles: Record<string, boolean>;
+  onToggle: (value: string, newValue: boolean) => void;
+}
+
+const VarFilter: FC<VarFilterProps> = ({ prefix, map, toggles, onToggle }) => (
+  <>
+    {[...map.entries()].map(([value, count], i) => (
+      <div key={i}>
+        <label htmlFor={`${prefix}-${toId(value)}`}>
+          <input
+            type="checkbox"
+            id={`${prefix}-${toId(value)}`}
+            checked={toggles[value] ?? true}
+            onChange={() => onToggle(value, !(toggles[value] ?? true))} />
+          {value} <span className="subtle">({count})</span>
+        </label>
+      </div>
+    ))}
+  </>
+);
+
+const FilterMenu: FC<FilterMenuProps> = ({ settings, setSettings, stats }) => {
+  return (
+    <>
+      <h3>Filter Menu</h3>
+      <div>{stats.count} items</div>
+      <div>
+        <label htmlFor="setting-hide-props">
+          <input type="checkbox" id="setting-hide-props" checked={settings.hideProps} onChange={() => setSettings({ ...settings, hideProps: !settings.hideProps })} />
+          Hide Props
+        </label>
+      </div>
+
+      <h4>Qualities</h4>
+      <VarFilter
+        prefix="setting-toggle-quality"
+        map={stats.qualities}
+        toggles={settings.hideQuality}
+        onToggle={(type, newVal) => setSettings({
+          ...settings,
+          hideQuality: {
+            ...settings.hideQuality,
+            [type]: newVal
+          }
+        })}
+      />
+
+      <h4>Sockets</h4>
+      <VarFilter
+        prefix="setting-toggle-sockets"
+        map={stats.sockets}
+        toggles={settings.hideSockets}
+        onToggle={(type, newVal) => setSettings({
+          ...settings,
+          hideSockets: {
+            ...settings.hideSockets,
+            [type]: newVal
+          }
+        })}
+      />
+
+      <h4>Sets</h4>
+      <VarFilter
+        prefix="setting-toggle-sets"
+        map={stats.sets}
+        toggles={settings.hideSets}
+        onToggle={(type, newVal) => setSettings({
+          ...settings,
+          hideSets: {
+            ...settings.hideSets,
+            [type]: newVal
+          }
+        })}
+      />
+
+      <h4>Types</h4>
+      <VarFilter
+        prefix="setting-toggle-type"
+        map={stats.types}
+        toggles={settings.hideType}
+        onToggle={(type, newVal) => setSettings({
+          ...settings,
+          hideType: {
+            ...settings.hideType,
+            [type]: newVal
+          }
+        })}
+      />
+    </>
   );
 };
 
@@ -89,6 +191,21 @@ function App() {
     return Promise.all(promises);
   }, [acceptedFiles]);
 
+  const stats = useMemo(() => {
+    if (!value) {
+      return emptyStats();
+    }
+
+    return value.flatMap(
+      v => v.value ?? []
+    ).reduce(
+      (acc, item) => computeStats(item, acc),
+      emptyStats()
+    );
+  }, [value]);
+
+  // console.log(settings, stats);
+
   return (
     <div className="App">
       <div {...getRootProps()} className="drop-zone">
@@ -107,11 +224,7 @@ function App() {
           ))}
         </div>
         <div className="filter-menu">
-          <h3>Filter Menu</h3>
-          <label htmlFor="setting-hide-props">
-            <input type="checkbox" id="setting-hide-props" checked={settings.hideProps} onChange={() => setSettings({ ...settings, hideProps: !settings.hideProps })} />
-            Hide Props
-          </label>
+          <FilterMenu stats={stats} settings={settings} setSettings={setSettings} />
         </div>
       </div>
     </div >
